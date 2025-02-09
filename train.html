@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Route Reservation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Train Route Reservation</h1>
+    </header>
+
+    <section class="route-section">
+        <h2>Train Route</h2>
+        <img src="train.png" alt="Train Route Image">
+    </section>
+
+    <section class="reservation-section">
+        <h2>Reservation Details</h2>
+        <p>Available Seats: <span id="available-seats">50</span></p>
+        <p>Reserved Seats: <span id="reserved-seats">0</span></p>
+
+        <form id="reservation-form">
+            <label for="reserve-seats">Number of Seats to Reserve:</label>
+            <input type="number" id="reserve-seats" name="reserve-seats" min="1" max="50">
+            <button type="button" id="reserve-button">Reserve Seats</button>
+        </form>
+    </section>
+
+</body>
+</html>

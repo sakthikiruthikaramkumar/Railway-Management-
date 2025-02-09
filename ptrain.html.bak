@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pothigai Train Reservation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        #seat-map {
+            border: 2px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            cursor: pointer;
+            float: left;
+            background-color: #b2b2b2;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .seat.available {
+            background-color: #6cf066;
+            cursor: pointer;
+        }
+
+        .seat.reserved {
+            background-color: #e74c3c;
+            cursor: not-allowed;
+        }
+
+        #selected-seats {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Pothigai Train Reservation</h1>
+    </header>
+
+    <div class="container">
+        <div id="seat-map"></div>
+        <div id="selected-seats"></div>
+        <button id="reserve-btn">Reserve Selected Seats</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        // Mock data for available seats
+        var availableSeats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+        $(document).ready(function() {
+            var $seatMap = $('#seat-map');
+            var $selectedSeats = $('#selected-seats');
+            var $reserveBtn = $('#reserve-btn');
+
+            // Initialize seat map
+            for (var i = 1; i <= 20; i++) {
+                $seatMap.append('<div class="seat" data-seat-number="' + i + '">' + i + '</div>');
+            }
+
+            // Update seat status (available, reserved) based on mock data
+            availableSeats.forEach(function(seatNumber) {
+                $('[data-seat-number="' + seatNumber + '"]').addClass('available');
+            });
+
+            // Seat click event handler
+            $seatMap.on('click', '.seat.available', function() {
+                var $seat = $(this);
+                $seat.toggleClass('selected');
+            });
+
+            // Reserve button click event handler
+            $reserveBtn.on('click', function() {
+                var selectedSeats = $seatMap.find('.seat.selected');
+
+                if (selectedSeats.length === 0) {
+                    alert('Please select at least one seat.');
+                    return;
+                }
+
+                var reservedSeatNumbers = [];
+
+                selectedSeats.each(function() {
+                    var seatNumber = $(this).data('seat-number');
+                    reservedSeatNumbers.push(seatNumber);
+                    $(this).removeClass('available').addClass('reserved');
+                });
+
+                // Display reserved seats
+                $selectedSeats.text('Reserved Seats: ' + reservedSeatNumbers.join(', '));
+
+                // You can send the reserved seat numbers to your server for further processing (e.g., ticket booking).
+                // Example: sendReservedSeatsToServer(reservedSeatNumbers);
+            });
+
+            // Function to send reserved seat numbers to the server (you need to implement this on your server)
+            function sendReservedSeatsToServer(reservedSeatNumbers) {
+                // Implement your logic to send the data to the server (e.g., using AJAX)
+                console.log('Reserved Seats: ', reservedSeatNumbers);
+            }
+        });
+    </script>
+</body>
+</html>
